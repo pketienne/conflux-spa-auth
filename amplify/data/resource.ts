@@ -8,6 +8,19 @@ const schema = a.schema({
 			priority: a.enum(['low', 'medium', 'high'])
     })
     .authorization([a.allow.owner()]),
+	Contacts: a
+		.model({
+			id: a.id(),
+			name: a.string(),
+			phone: a.phone(),
+			email: a.email(),
+			type: a.enum(['person', 'company']),
+			ssn: a.integer(),
+			ein: a.integer(),
+			dba: a.string(),
+			notes: a.string(),
+		})
+		.authorization([a.allow.owner()]),
 });
 
 export type Schema = ClientSchema<typeof schema>;
