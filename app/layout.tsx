@@ -1,4 +1,4 @@
-// app/layout.tsx
+'use client';
 import '@aws-amplify/ui-react/styles.css';
 import { Suspense } from 'react';
 import type { Metadata } from 'next';
