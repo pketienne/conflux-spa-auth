@@ -1,7 +1,6 @@
 import '@aws-amplify/ui-react/styles.css';
 import type { Metadata } from 'next';
 import { Inter } from 'next/font/google';
-import './globals.css';
 import { LayoutProvider } from '../layout/context/layoutcontext';
 import { PrimeReactProvider } from 'primereact/api';
 import '../styles/layout/layout.scss';
