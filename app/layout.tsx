@@ -19,9 +19,7 @@ export default function RootLayout({ children }: { children: React.ReactNode }) 
 		<html lang="en">
 			<body className={inter.className}>
 				<ConfigureAmplifyClientSide />
-				<Suspense>
-					{children}
-				</Suspense>
+				{children}
 			</body>
 		</html>
 	);
