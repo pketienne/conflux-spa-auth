@@ -1,5 +1,4 @@
 // app/page.tsx
-'use server';
 
 import { revalidatePath } from 'next/cache';
 

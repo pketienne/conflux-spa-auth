@@ -1,4 +1,6 @@
 // utils/amplify-utils.ts
+'use server';
+
 import { cookies } from "next/headers";
 
 import { createServerRunner } from "@aws-amplify/adapter-nextjs";
