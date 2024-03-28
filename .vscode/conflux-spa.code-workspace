@@ -1,0 +1,14 @@
+{
+	"folders": [
+		{
+			"path": ".."
+		},
+		{
+			"path": "../../freya-10.0.0"
+		},
+		{
+			"path": "../../conflux-spa-auth"
+		}
+	],
+	"settings": {}
+}
