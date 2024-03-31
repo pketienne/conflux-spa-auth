@@ -7,13 +7,12 @@ import { LayoutContext } from './context/layoutcontext';
 import { MenuContext } from './context/menucontext';
 import type { AppMenuItemProps } from '@/types';
 import { useSubmenuOverlayPosition } from './hooks/useSubmenuOverlayPosition';
-import { usePathname, useSearchParams } from 'next/navigation';
+import { usePathname } from 'next/navigation';
 
 const AppMenuitem = (props: AppMenuItemProps) => {
 	const { activeMenu, setActiveMenu } = useContext(MenuContext);
 	const { isSlim, isSlimPlus, isHorizontal, isDesktop, setLayoutState, layoutState, layoutConfig } = useContext(LayoutContext);
 	const pathname = usePathname();
-	const searchParams = useSearchParams();
 	const submenuRef = useRef<HTMLUListElement>(null);
 	const menuitemRef = useRef<HTMLLIElement>(null);
 	const item = props.item;
@@ -42,14 +41,14 @@ const AppMenuitem = (props: AppMenuItemProps) => {
 		if (!(isSlim() || isSlimPlus() || isHorizontal()) && isActiveRoute) {
 			setActiveMenu(key);
 		}
-		const url = pathname + searchParams.toString();
+		const url = pathname;
 		const onRouteChange = () => {
 			if (!(isSlim() || isHorizontal()) && item!.to && item!.to === url) {
 				setActiveMenu(key);
 			}
 		};
 		onRouteChange();
-	}, [pathname, searchParams, layoutConfig]);
+	}, [pathname, layoutConfig]);
 
 	const itemClick = (event: React.MouseEvent<HTMLAnchorElement>) => {
 		//avoid processing disabled items
