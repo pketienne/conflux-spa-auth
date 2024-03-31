@@ -6,9 +6,12 @@ import { StyleClass } from 'primereact/styleclass';
 import { classNames } from 'primereact/utils';
 import { Ripple } from 'primereact/ripple';
 import AppSidebar from './AppSidebar';
+import { signOut } from 'aws-amplify/auth';
+import { useRouter } from 'next/navigation';
 
 const AppTopbar = forwardRef((props: { sidebarRef: React.RefObject<HTMLDivElement> }, ref) => {
 	const { onMenuToggle, showRightSidebar, showConfigSidebar, isHorizontal } = useContext(LayoutContext);
+	const router = useRouter();
 
 	const menubuttonRef = useRef(null);
 	const buttonref = useRef(null);
@@ -29,6 +32,11 @@ const AppTopbar = forwardRef((props: { sidebarRef: React.RefObject<HTMLDivElemen
 	useImperativeHandle(ref, () => ({
 		menubutton: menubuttonRef.current
 	}));
+
+	const logout = async () => {
+		await signOut();
+		router.push('/');
+	}	
 
 	return (
 		<>
@@ -87,7 +95,7 @@ const AppTopbar = forwardRef((props: { sidebarRef: React.RefObject<HTMLDivElemen
 								</li>
 								<li role="menuitem" className="m-0">
 									<StyleClass nodeRef={logoutRef} selector="@grandparent" enterClassName="hidden" enterActiveClassName="px-scalein" leaveToClassName="hidden" leaveActiveClassName="px-fadeout" hideOnOutsideClick>
-										<a ref={logoutRef} className="flex align-items-center hover:text-primary-500 transition-duration-200">
+										<a onClick={logout} ref={logoutRef} className="flex align-items-center hover:text-primary-500 transition-duration-200">
 											<i className="pi pi-fw pi-sign-out mr-2"></i>
 											<span>Logout</span>
 										</a>
