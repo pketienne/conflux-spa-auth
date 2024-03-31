@@ -40,13 +40,11 @@ async function App() {
 			<h1>Hello, Amplify 👋</h1>
 			<br />
 			<br />
-			<br />
 			<form action={addTodo}>
 				<input type="text" name="title" />
 				<button type="submit">Add Todo</button>
 			</form>
 			<ul>{todos && todos.map((todo) => <li key={todo.id}>{todo.content}</li>)}</ul>
-			<br />
 			<br />
 			<br />
 			<form action={addContact}>

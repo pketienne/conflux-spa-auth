@@ -1,5 +1,4 @@
 'use client';
-import { usePathname, useSearchParams } from 'next/navigation';
 import { useEventListener, useResizeListener, useUnmountEffect } from 'primereact/hooks';
 import { classNames, DomHandler } from 'primereact/utils';
 import React, { useCallback, useContext, useEffect, useRef } from 'react';
@@ -14,8 +13,6 @@ const Layout = (props: ChildContainerProps) => {
 	const { layoutConfig, layoutState, setLayoutState, isSlim, isSlimPlus, isHorizontal, isDesktop, isSidebarActive } = useContext(LayoutContext);
 	const topbarRef = useRef<AppTopbarRef>(null);
 	const sidebarRef = useRef<HTMLDivElement>(null);
-	const pathname = usePathname();
-	const searchParams = useSearchParams();
 
 	const [bindMenuOutsideClickListener, unbindMenuOutsideClickListener] = useEventListener({
 		type: 'click',
@@ -86,14 +83,6 @@ const Layout = (props: ChildContainerProps) => {
 		};
 		// eslint-disable-next-line react-hooks/exhaustive-deps
 	}, [layoutState.overlayMenuActive, layoutState.staticMenuMobileActive, layoutState.overlaySubmenuActive]);
-
-	useEffect(() => {
-		const onRouteChange = () => {
-			hideMenu();
-		};
-		onRouteChange();
-		// eslint-disable-next-line react-hooks/exhaustive-deps
-	}, [pathname, searchParams]);
 
 	useUnmountEffect(() => {
 		unbindMenuOutsideClickListener();
