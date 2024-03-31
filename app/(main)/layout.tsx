@@ -1,5 +1,5 @@
 import { Metadata, Viewport } from 'next';
-import Layout from '@/layout/layout';
+import Layout from '../../layout/layout';
 
 interface MainLayoutProps {
 	children: React.ReactNode;
