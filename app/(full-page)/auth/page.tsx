@@ -1,9 +1,7 @@
 import Login from '@/components/Login';
 
 const Auth = () => {
-	return (
-		<Login />
-	)
-}
+	return <Login />;
+};
 
 export default Auth;

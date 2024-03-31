@@ -4,8 +4,6 @@ import { revalidatePath } from 'next/cache';
 
 import { AuthGetCurrentUserServer, cookiesClient } from '@/utils/amplify-utils';
 
-import Logout from '@/components/Logout';
-
 async function App() {
 	const user = await AuthGetCurrentUserServer();
 	const { data: todos } = await cookiesClient.models.Todo.list();
@@ -40,8 +38,6 @@ async function App() {
 	return (
 		<>
 			<h1>Hello, Amplify 👋</h1>
-			<br />
-			{user && <Logout />}
 			<br />
 			<br />
 			<br />

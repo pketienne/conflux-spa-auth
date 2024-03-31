@@ -36,7 +36,7 @@ const AppTopbar = forwardRef((props: { sidebarRef: React.RefObject<HTMLDivElemen
 	const logout = async () => {
 		await signOut();
 		router.push('/');
-	}	
+	};
 
 	return (
 		<>

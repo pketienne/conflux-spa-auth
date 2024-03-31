@@ -7,5 +7,5 @@ export const ContactService = {
 		});
 		const d = await res.json();
 		return d.data as Demo.Contact[];
-	},
+	}
 };

@@ -5,4 +5,4 @@ export const UserService = {
 	async getUser() {
 		return await AuthGetCurrentUserServer();
 	}
-}
+};

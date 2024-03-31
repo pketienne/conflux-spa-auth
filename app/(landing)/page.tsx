@@ -14,7 +14,6 @@ import { revalidatePath } from 'next/cache';
 import { AuthGetCurrentUserServer, cookiesClient } from '@/utils/amplify-utils';
 import Logout from '@/components/Logout';
 
-
 let activeLink = 0;
 
 const LandingPage: Page = () => {
