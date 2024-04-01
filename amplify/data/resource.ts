@@ -7,7 +7,7 @@ const schema = a.schema({
 			name: a.string(),
 			phone: a.string(),
 			email: a.string(),
-			type: a.enum(['person', 'company']),
+			type: a.string(),
 			ssn: a.string(),
 			ein: a.string(),
 			dba: a.string(),

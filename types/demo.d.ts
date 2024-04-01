@@ -214,12 +214,14 @@ declare namespace Demo {
 
 	// ContactService
 	type Contact = {
-		id: string;
-		name: string;
+		createdAt?: string;
+		updatedAt?: string;
+		id?: string;
+		name?: string;
 		ssn?: string;
-		phone: string;
+		phone?: string;
 		email?: string;
-		type: string;
+		type?: string;
 		ein?: string;
 		dba?: string;
 		notes?: string;

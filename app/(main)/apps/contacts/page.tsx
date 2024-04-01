@@ -10,7 +10,7 @@ import type { Schema } from "@/amplify/data/resource";
 const client = generateClient<Schema>();
 
 const Crud = () => {
-	const [contacts, setContacts] = useState();
+	const [contacts, setContacts] = useState<any>();
 
 	async function addContact(data: FormData) {
 		const { errors, data: newContact } = await client.models.Contacts.create({
