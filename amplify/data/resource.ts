@@ -5,11 +5,11 @@ const schema = a.schema({
 		.model({
 			id: a.id(),
 			name: a.string(),
-			phone: a.phone(),
-			email: a.email(),
+			phone: a.string(),
+			email: a.string(),
 			type: a.enum(['person', 'company']),
-			ssn: a.integer(),
-			ein: a.integer(),
+			ssn: a.string(),
+			ein: a.string(),
 			dba: a.string(),
 			notes: a.string(),
 		})

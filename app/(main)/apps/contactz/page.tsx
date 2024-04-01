@@ -12,31 +12,24 @@ const client = generateClient<Schema>();
 const Crud = () => {
 	const [contacts, setContacts] = useState<Demo.Contact[]>([]);
 
-	// const addContact = async () => {
-	// 	const { errors, data: newContact } = await client.models.Contacts.create({
-	// 		name: 'Anthony D. Etienne',
-	// 		ssn: 123121234,
-	// 		phone: '(317) 882-1239',
-	// 		email: 'tony.etienne@gmail.com',
-	// 		type: 'person',
-	// 		ein: null,
-	// 		dba: null,
-	// 		notes: "I don't understand how this guy can smell so bad.",
-	// 	});
-	// 	console.log(errors, newContact);
-	// }
-
 	async function addContact(data: FormData) {
-		const name = data.get('name') as string;
+		const { errors, data: newContact } = await client.models.Contacts.create({
+			name: data.get('name'),
+			ssn: data.get('ssn'),
+			phone: data.get('phone'),
+			email: data.get('email'),
+			type: data.get('type'),
+			ein: data.get('ein'),
+			dba: data.get('dba'),
+			notes: data.get('notes'),
+		})
 	}	
 
-	async function getContacts() {
-		const { data } = await client.models.Contacts.list();
-		setContacts(data);
-	}
-
 	useEffect(() => {
-		getContacts();
+		const sub = client.models.Contacts.observeQuery().subscribe(
+			({ items }) => setContacts([...items])
+		);
+		return () => sub.unsubscribe();
 	}, []);
 
 	return (
