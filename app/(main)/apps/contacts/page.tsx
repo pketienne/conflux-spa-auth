@@ -4,7 +4,6 @@ import React, { useEffect, useState } from 'react';
 import { Column } from 'primereact/column';
 import { DataTable } from 'primereact/datatable';
 import { generateClient } from 'aws-amplify/data';
-import type { Demo } from '@/types';
 import type { Schema } from '@/amplify/data/resource';
 
 const client = generateClient<Schema>();
