@@ -114,33 +114,32 @@ import { FilterMatchMode } from 'primereact/api';
 import { DataTable } from 'primereact/datatable';
 import { Column } from 'primereact/column';
 import { InputText } from 'primereact/inputtext';
-import { CustomerService } from '@/demo/service/CustomerService';
+import { generateClient } from 'aws-amplify/data';
+import { type Schema } from '@/amplify/data/resource';
+
+const client = generateClient<Schema>();
 
 export default function BasicFilterDemo() {
-	const [customers, setCustomers] = useState(null);
 	const [filters, setFilters] = useState({
 		global: { value: null, matchMode: FilterMatchMode.CONTAINS },
 		name: { value: null, matchMode: FilterMatchMode.CONTAINS },
 	});
 	const [loading, setLoading] = useState(true);
 	const [globalFilterValue, setGlobalFilterValue] = useState('');
+	const [contacts, setContacts] = useState<Schema['Contacts'][]>();
+
+	async function listContacts() {
+		const { data } = await client.models.Contacts.list();
+		console.log(data);
+		setContacts(data);
+	}
 
 	useEffect(() => {
-		CustomerService.getCustomersMedium().then((data) => {
-			setCustomers(getCustomers(data));
-			setLoading(false);
-		});
-	}, []); // eslint-disable-line react-hooks/exhaustive-deps
+		listContacts();
+		setLoading(false);
+	},[]);
 
-	const getCustomers = (data) => {
-		return [...(data || [])].map((d) => {
-			d.date = new Date(d.date);
-
-			return d;
-		});
-	};
-
-	const onGlobalFilterChange = (e) => {
+	const onGlobalFilterChange = (e: any) => {
 		const value = e.target.value;
 		let _filters = { ...filters };
 
@@ -165,7 +164,7 @@ export default function BasicFilterDemo() {
 
 	return (
 		<div className="card">
-			<DataTable value={customers} dataKey="id" filters={filters} filterDisplay="row" loading={loading}
+			<DataTable value={contacts} dataKey="id" filters={filters} filterDisplay="row" loading={loading}
 					globalFilterFields={['name', 'country.name', 'representative.name', 'status']} header={header} emptyMessage="No customers found.">
 				<Column field="name" header="Name" filter filterPlaceholder="Search by name" style={{ minWidth: '12rem' }} />
 			</DataTable>
