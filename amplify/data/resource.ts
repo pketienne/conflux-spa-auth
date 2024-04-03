@@ -3,13 +3,12 @@ import { type ClientSchema, a, defineData } from '@aws-amplify/backend';
 const schema = a.schema({
 	Contacts: a
 		.model({
-			id: a.id(),
 			name: a.string(),
-			phone: a.string(),
-			email: a.string(),
-			type: a.string(),
-			ssn: a.string(),
-			ein: a.string(),
+			phone: a.phone(),
+			email: a.email(),
+			type: a.enum(['PERSON', 'COMPANY']),
+			ssn: a.integer(),
+			ein: a.integer(),
 			dba: a.string(),
 			notes: a.string(),
 		})
