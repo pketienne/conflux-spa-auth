@@ -1,38 +1,63 @@
 'use client';
 
-import React, { useEffect, useState } from 'react';
+import { Button } from 'primereact/button';
 import { Column } from 'primereact/column';
 import { DataTable } from 'primereact/datatable';
+import { FileUpload } from 'primereact/fileupload';
+import { Toolbar } from 'primereact/toolbar';
 import { generateClient } from 'aws-amplify/data';
-import type { Schema } from '@/amplify/data/resource';
+import React, { useEffect, useState } from 'react';
+import { type Schema } from '@/amplify/data/resource';
 
 const client = generateClient<Schema>();
 
-const Crud = () => {
-	const [contacts, setContacts] = useState<any>();
+const Contacts = () => {
+	const [contacts, setContacts] = useState<Schema['Contacts'][]>();
+	const [selectedContacts, setSelectedContacts] = useState<Schema['Contacts'][]>();
 
-	async function addContact(data: FormData) {
-		const { errors, data: newContact } = await client.models.Contacts.create({
-			name: data.get('name') as string,
-			ssn: data.get('ssn') as string,
-			phone: data.get('phone') as string,
-			email: data.get('email') as string,
-			type: data.get('type') as any,
-			ein: data.get('ein') as string,
-			dba: data.get('dba') as string,
-			notes: data.get('notes') as string
-		});
+	async function listContacts() {
+		const { data } = await client.models.Contacts.list();
+		setContacts(data);
 	}
 
 	useEffect(() => {
-		const sub = client.models.Contacts.observeQuery().subscribe(({ items }) => setContacts([...items]));
-		return () => sub.unsubscribe();
-	}, []);
+		listContacts();
+	},[]);
+
+	const startToolbarTemplate = () => {
+		return (
+			<React.Fragment>
+				<div className="my-2">
+					<Button label="New" icon="pi pi-plus" severity="success" className="mr-2" />
+					<Button label="Delete" icon="pi pi-trash" severity="danger" disabled={!selectedContacts || !selectedContacts.length} />
+				</div>
+			</React.Fragment>
+		);
+	};
+
+	const endToolbarTemplate = () => {
+		return (
+			<React.Fragment>
+				<FileUpload mode="basic" accept="image/*" maxFileSize={1000000} chooseLabel="Import" className="mr-2 inline-block" />
+				<Button label="Export" icon="pi pi-upload" severity="help" />
+			</React.Fragment>
+		);
+	};
+
+	const actionBodyTemplate = () => {
+		return (
+			<>
+				<Button icon="pi pi-pencil" rounded severity="success" className="mr-2" />
+				<Button icon="pi pi-trash" severity="warning" rounded />
+			</>
+		);
+	};
 
 	return (
 		<div className="grid crud-demo">
 			<div className="col-12">
 				<div className="card">
+					<Toolbar className="mb-4" start={startToolbarTemplate} end={endToolbarTemplate} />
 					<DataTable value={contacts} dataKey="id" header="Contact Details">
 						<Column selectionMode="multiple" headerStyle={{ width: '4rem' }} />
 						<Column sortable field="name" header="Name" />
@@ -43,33 +68,12 @@ const Crud = () => {
 						<Column sortable field="ein" header="EIN" />
 						<Column sortable field="dba" header="DBA" />
 						<Column sortable field="notes" header="Notes" />
+						<Column body={actionBodyTemplate} headerStyle={{ minWidth: '10rem' }} />
 					</DataTable>
-					<br />
-					<form action={addContact}>
-						<input type="text" placeholder="name" name="name" />
-						<br />
-						<input type="text" placeholder="phone" name="phone" />
-						<br />
-						<input type="text" placeholder="email" name="email" />
-						<br />
-						<input type="text" placeholder="type" name="type" />
-						<br />
-						<input type="text" placeholder="ssn" name="ssn" />
-						<br />
-						<input type="text" placeholder="ein" name="ein" />
-						<br />
-						<input type="text" placeholder="dba" name="dba" />
-						<br />
-						<input type="text" placeholder="notes" name="notes" />
-						<br />
-						<button type="submit" value="submit">
-							Add Contact
-						</button>
-					</form>
 				</div>
 			</div>
 		</div>
-	);
-};
+	)
+}
 
-export default Crud;
+export default Contacts;
