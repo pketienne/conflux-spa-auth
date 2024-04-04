@@ -131,11 +131,11 @@ export default function BasicFilterDemo() {
 	async function addContact(data: FormData) {
 		const { errors, data: newContact } = await client.models.Contacts.create({
 			name: data.get('name') as string,
-			ssn: data.get('ssn') as string,
+			ssn: data.get('ssn') as number | null,
 			phone: data.get('phone') as string,
 			email: data.get('email') as string,
 			type: data.get('type') as any,
-			ein: data.get('ein') as string,
+			ein: data.get('ein') as number | null,
 			dba: data.get('dba') as string,
 			notes: data.get('notes') as string
 		});
