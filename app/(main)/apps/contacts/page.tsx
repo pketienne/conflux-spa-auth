@@ -128,6 +128,19 @@ export default function BasicFilterDemo() {
 	const [globalFilterValue, setGlobalFilterValue] = useState('');
 	const [contacts, setContacts] = useState<Schema['Contacts'][]>();
 
+	async function addContact(data: FormData) {
+		const { errors, data: newContact } = await client.models.Contacts.create({
+			name: data.get('name') as string,
+			ssn: data.get('ssn') as string,
+			phone: data.get('phone') as string,
+			email: data.get('email') as string,
+			type: data.get('type') as any,
+			ein: data.get('ein') as string,
+			dba: data.get('dba') as string,
+			notes: data.get('notes') as string
+		});
+	}
+
 	async function listContacts() {
 		const { data } = await client.models.Contacts.list();
 		console.log(data);
@@ -168,6 +181,26 @@ export default function BasicFilterDemo() {
 					globalFilterFields={['name', 'country.name', 'representative.name', 'status']} header={header} emptyMessage="No customers found.">
 				<Column field="name" header="Name" filter filterPlaceholder="Search by name" style={{ minWidth: '12rem' }} />
 			</DataTable>
+			<br />
+			<form action={addContact}>
+				<input type="text" placeholder="name" name="name" />
+				<br />
+				<input type="text" placeholder="phone" name="phone" />
+				<br />
+				<input type="text" placeholder="email" name="email" />
+				<br />
+				<input type="text" placeholder="type" name="type" />
+				<br />
+				<input type="text" placeholder="ssn" name="ssn" />
+				<br />
+				<input type="text" placeholder="ein" name="ein" />
+				<br />
+				<input type="text" placeholder="dba" name="dba" />
+				<br />
+				<input type="text" placeholder="notes" name="notes" />
+				<br />
+				<button type="submit" value="submit">Add Contact</button>
+			</form>
 		</div>
 	);
 }
